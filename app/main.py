@@ -5,6 +5,9 @@ import logging
 from app.core.config import get_settings
 from app.core.logging import setup_logging
 from app.api.routes import health
+from app.api.routes import predict
+from app.services.ml_service import MLService
+
 
 settings = get_settings()
 logger = logging.getLogger(__name__)
@@ -14,6 +17,9 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     setup_logging()
     logger.info("Starting application...")
+
+    app.state.ml_service = MLService()
+
     yield
     logger.info("Shutting down application...")
 
@@ -26,3 +32,4 @@ app = FastAPI(
 )
 
 app.include_router(health.router)
+app.include_router(predict.router)
