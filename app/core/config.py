@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     version: str = "0.1.0"
     debug: bool = True
 
+    database_url: str = "postgresql://zuzanna@localhost:5432/ai_service"
+
     class Config:
         env_file = ".env"
         case_sensitive = True

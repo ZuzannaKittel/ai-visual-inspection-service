@@ -7,6 +7,8 @@ from app.core.logging import setup_logging
 from app.api.routes import health
 from app.api.routes import predict
 from app.services.ml_service import MLService
+from app.db.base import Base
+from app.db.session import engine
 
 
 settings = get_settings()
@@ -18,6 +20,9 @@ async def lifespan(app: FastAPI):
     setup_logging()
     logger.info("Starting application...")
 
+    # Create database tables
+    Base.metadata.create_all(bind=engine)
+    # Initialize ML service and store in app state for access in routes
     app.state.ml_service = MLService()
 
     yield
