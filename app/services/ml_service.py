@@ -22,15 +22,25 @@ class MLService:
 
         logger.info("Model loaded successfully.")
 
-    def predict(self, image: Image.Image) -> dict:
+    def predict(self, image: Image.Image, top_k: int = 3) -> dict:
         tensor = self.transform(image).unsqueeze(0)
 
         with torch.no_grad():
             outputs = self.model(tensor)
             probabilities = torch.nn.functional.softmax(outputs, dim=1)
-            confidence, predicted_class = torch.max(probabilities, dim=1)
+
+            top_probs, top_indices = torch.topk(probabilities, top_k)
+
+        predictions = []
+        for prob, idx in zip(top_probs[0], top_indices[0]):
+            predictions.append({
+                "class_name": self.classes[idx.item()],
+                "confidence": float(prob.item())
+            })
 
         return {
-            "class": self.classes[predicted_class.item()],
-            "confidence": float(confidence.item()),
+            "model_name": "efficientnet_b0",
+            "model_version": "imagenet-1k",
+            "predictions": predictions
         }
+
