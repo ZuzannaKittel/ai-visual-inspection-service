@@ -1,7 +1,8 @@
 import torch
 import torchvision.transforms as transforms
-from torchvision import models
+from torchvision.models import efficientnet_b0, EfficientNet_B0_Weights
 from PIL import Image
+
 import logging
 
 
@@ -10,20 +11,14 @@ logger = logging.getLogger(__name__)
 
 class MLService:
     def __init__(self):
-        logger.info("Loading pretrained model...")
-        self.model = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+        logger.info("Loading pretrained EfficientNet-B0 model...")
+
+        weights = EfficientNet_B0_Weights.DEFAULT
+        self.model = efficientnet_b0(weights=weights)
         self.model.eval()
 
-        self.transform = transforms.Compose([
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=models.ResNet18_Weights.DEFAULT.meta["mean"],
-                std=models.ResNet18_Weights.DEFAULT.meta["std"],
-            ),
-        ])
-
-        self.classes = models.ResNet18_Weights.DEFAULT.meta["categories"]
+        self.transform = weights.transforms()
+        self.classes = weights.meta["categories"]
 
         logger.info("Model loaded successfully.")
 
