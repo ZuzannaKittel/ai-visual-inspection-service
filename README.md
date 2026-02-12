@@ -2,7 +2,7 @@
 
 A production-ready FastAPI microservice for image classification with a pretrained CNN, structured logging, and persistent storage.
 
-## Features (Implemented Today)
+## Features (🚧 In development)
 
 - **FastAPI backend** with clean layered architecture
 - **Pretrained CNN inference** using `EfficientNet-B0`  
@@ -15,11 +15,6 @@ A production-ready FastAPI microservice for image classification with a pretrain
   - Automatic table creation on startup (dev mode)
 - **OpenAPI documentation** via `/docs`
 - **Clean response schemas** using PydanticProduction-style ML microservice built with:
-
-- FastAPI
-- PyTorch
-- PostgreSQL
-- Docker
 
 ## Goal
 
