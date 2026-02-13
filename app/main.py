@@ -20,8 +20,6 @@ async def lifespan(app: FastAPI):
     setup_logging()
     logger.info("Starting application...")
 
-    # Create database tables
-    Base.metadata.create_all(bind=engine)
     # Initialize ML service and store in app state for access in routes
     app.state.ml_service = MLService()
 
