@@ -7,7 +7,9 @@ class Settings(BaseSettings):
     version: str = "0.1.0"
     debug: bool = True
 
-    database_url: str = "postgresql://zuzanna@localhost:5432/ai_service"
+    DATABASE_URL: str
+    MODEL_PATH: str = "/app/models/efficientnet_b0.pth"
+    DEBUG: bool = True
 
     class Config:
         env_file = ".env"
