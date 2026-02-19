@@ -3,7 +3,7 @@ from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
 from app.db.base import Base
-from app.models import prediction  # ensure model is imported
+from app.models.prediction import Prediction  # ensure model is imported
 
 config = context.config
 
