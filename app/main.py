@@ -9,6 +9,7 @@ from app.api.routes import predict
 from app.services.ml_service import MLService
 from app.db.base import Base
 from app.db.session import engine
+from fastapi.middleware.cors import CORSMiddleware
 
 
 settings = get_settings()
@@ -36,3 +37,11 @@ app = FastAPI(
 
 app.include_router(health.router)
 app.include_router(predict.router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # Vite dev server for frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
